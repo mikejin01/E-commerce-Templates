@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  /*
+   * Font roles, not families. These are the showcase-shell defaults; each demo
+   * site overrides BOTH of them on its `.site-<brand>` wrapper (see below), so
+   * the `font-heading`/`font-sans` utilities and the h1–h4 base rule resolve
+   * per site. Outside a site wrapper (landing page, root 404) the system stack
+   * below is what renders.
+   *
+   * These must NOT be written as `var(--site-heading-font, <fallback>)`.
+   * `@theme` emits into `:root`, where `--site-*-font` is undefined, so the
+   * fallback is resolved and baked in there — and because custom properties
+   * inherit as *computed* values, defining `--site-*-font` further down can
+   * never reach it. That silently rendered every site in the system stack.
+   */
+  --font-heading: ui-sans-serif, system-ui, sans-serif;
+  --font-sans: -apple-system, "Segoe UI", sans-serif;
+
+  /* ——— VERDON (outdoor/sports eyewear) ——— */
+  --color-verdon-green: #173c37;
+  --color-verdon-green-dark: #112d29;
+  --color-verdon-navy: #22384b;
+  --color-verdon-cream: #f7f7f7;
+  --color-verdon-sand: #efece4;
+  --color-verdon-star: #f5a623;
+
+  /* ——— ELBURG (card-protecting wallets & pocket carry) ——— */
+  --color-elburg-ink: #2e2e2b;
+  --color-elburg-paper: #f5f4f0;
+  --color-elburg-accent: #c05746;
+  --color-elburg-slate: #454545;
+  --color-elburg-bone: #e2e0d4;
+  --color-elburg-bark: #5c5648;
+}
+
+body {
+  background: #ffffff;
+  color: #1d1c1c;
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+}
+
+/*
+ * Per-site scopes. Each wrapper redefines the two font *roles* directly — not
+ * some indirect `--site-*-font` that `--font-*` points at, which cannot work
+ * (see the note in `@theme`). It then re-states `font-family: var(--font-sans)`
+ * so its body font applies below it, because `font-family` is also inherited as
+ * a computed value and would otherwise still hold the shell's stack.
+ */
+.site-verdon {
+  --font-heading: var(--font-jost), "Futura", sans-serif;
+  --font-sans: var(--font-montserrat), -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
+}
+
+.site-verdon ::selection {
+  background: var(--color-verdon-green);
+  color: #ffffff;
+}
+
+/*
+ * ELBURG runs on condensed caps for every label and an editorial serif — used
+ * far more in italic than upright — for display type. The paper background is
+ * the brand's, not white, so it is set here rather than on each page.
+ */
+.site-elburg {
+  --font-heading: var(--font-barlow-condensed), "Oswald", sans-serif;
+  --font-sans: var(--font-newsreader), Georgia, serif;
+  font-family: var(--font-sans);
+  background: var(--color-elburg-paper);
+  color: var(--color-elburg-ink);
+}
+
+.site-elburg ::selection {
+  background: var(--color-elburg-accent);
+  color: #ffffff;
+}
+
+/* Keyboard focus ring. `currentColor` so it stays visible on the dark green
+   bands. Must live in the `base` layer: unlayered rules beat Tailwind's
+   layered utilities, which would stop form controls opting out with
+   `focus:outline-none` and double the ring up against their red error border. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* Hide scrollbars on carousels while keeping them scrollable */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
