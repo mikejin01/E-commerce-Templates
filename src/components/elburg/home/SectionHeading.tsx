@@ -18,8 +18,10 @@ export default function SectionHeading({
   href?: string;
   className?: string;
 }) {
+  /* `-my-2 py-2` pads a 12px label to a 28px tap target; the negative margin
+     cancels it, so the row's `items-end` baseline is unchanged */
   const linkClass =
-    "shrink-0 font-heading text-[12px] font-medium uppercase leading-none tracking-[0.06em] underline underline-offset-[5px] hover:text-elburg-accent";
+    "-my-2 shrink-0 py-2 font-heading text-[12px] font-medium uppercase leading-none tracking-[0.06em] underline underline-offset-[5px] hover:text-elburg-accent";
 
   return (
     <div className={`flex items-end justify-between gap-6 ${className}`}>

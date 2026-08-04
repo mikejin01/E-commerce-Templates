@@ -32,7 +32,9 @@ export default function NewsletterForm() {
         required
         placeholder="Your email"
         aria-label="Email address"
-        className="w-full border-b border-elburg-bone/40 bg-transparent pb-1.5 text-center text-[14px] text-elburg-bone placeholder:text-elburg-bone/60 focus:border-elburg-bone focus:outline-none"
+        /* 16px below `lg` or iOS Safari zooms the page on focus — the same
+           rule the checkout's controls follow */
+        className="w-full border-b border-elburg-bone/40 bg-transparent pb-2 text-center text-[16px] text-elburg-bone placeholder:text-elburg-bone/60 focus:border-elburg-bone focus:outline-none lg:pb-1.5 lg:text-[14px]"
       />
       <button type="submit" className="sr-only">
         Sign up

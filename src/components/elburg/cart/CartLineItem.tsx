@@ -37,7 +37,7 @@ export default function CartLineItem({
           <Link
             href={href}
             onClick={onNavigate}
-            className="font-heading text-[14px] font-medium uppercase leading-tight tracking-[0.03em] hover:text-elburg-accent"
+            className="-my-1 py-1 font-heading text-[14px] font-medium uppercase leading-tight tracking-[0.03em] hover:text-elburg-accent"
           >
             {item.title}
           </Link>
@@ -68,7 +68,7 @@ export default function CartLineItem({
           <button
             type="button"
             onClick={() => removeItem(item.key)}
-            className="font-heading text-[11px] uppercase tracking-[0.1em] text-elburg-ink/60 underline underline-offset-4 hover:text-elburg-accent"
+            className="-m-2 p-2 font-heading text-[11px] uppercase tracking-[0.1em] text-elburg-ink/60 underline underline-offset-4 hover:text-elburg-accent"
           >
             Remove
           </button>

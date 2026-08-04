@@ -302,7 +302,12 @@ Drive it with `playwright-core` and the already-cached Chromium at
 The harness is scratch, not committed. For the site under test it should assert, at minimum:
 
 1. `documentElement.scrollWidth <= clientWidth` on all five routes at 390/768/1024/1440/1920/2560
-2. ADD TO CART's bounding box is inside the viewport at every width
+2. ADD TO CART's bounding box is inside the viewport at every width — **and
+   `document.elementFromPoint()` at its centre returns the button itself.** Inside the viewport is
+   not the same as reachable: ELBURG's sticky buy bar put its CTA in the same corner as the
+   showcase's floating DemoSwitcher, which covered it outright on a phone. A rect assertion passed
+   the whole time; a hit test is what catches it. Apply the same check to any control a fixed
+   overlay could sit on
 3. The catalogue size matches the site's cap and the count label agrees
 4. Every PDP section heading renders
 5. Picking a variant swaps the gallery; picking an option changes the price; ticking an add-on
@@ -427,6 +432,31 @@ CSS lessons that will bite any site, kept here so each build doesn't relearn the
   neighbours. Keep the ratio sequence and reorder the entries so each slot gets a photograph at
   least as tall as it is — ELBURG's stories band opened on a landscape flat-lay in a 141 slot until
   it was moved to a 77.
+- **An icon button's tap target is its icon** unless it is given one. These designs draw header and
+  drawer icons at 20–24px, well under the ~44px finger target (WCAG 2.5.8's floor is 24px) — and the
+  miss compounds on exactly the controls a phone user hits most (menu, cart, close). Pad the hit
+  area without moving the layout: `p-2.5 -m-2.5` on the button. Dot pagination is the worst case
+  (a 10px dot *is* the control) — put the visible dot in a `size-6`+ flex button instead of styling
+  the button as the dot. Adjacent padded controls eat their shared gap from both sides, so keep each
+  button's padding to half the gap or the hit areas overlap.
+- **A sticky bottom bar owns the bottom edge of the viewport, and the page's last rows end up
+  under it with no scroll left to reveal them.** ELBURG's PDP ended with its copyright line
+  permanently behind the buy bar. Two things share that edge — the site's own footer and the
+  showcase's floating DemoSwitcher — and neither should have to know which site is rendering. So
+  the bar *publishes* its measured height as `--site-bottom-bar` on `document.documentElement`
+  (`0px` when hidden, removed on unmount); `globals.css` gives `footer` that much
+  `padding-bottom`, and the switcher offsets its `bottom` by it. Any future site's bottom bar gets
+  both behaviours for free by setting the same variable.
+- **A phone's listing wants the reference's column count, not the desktop grid's base tier.** A
+  `grid-cols-1` base with `sm:grid-cols-2` reads as a deliberate mobile choice and is almost never
+  what the reference does: ELBURG's 24 SKUs came out one-per-row at 390 — a 13,900px page rendering
+  a $49 card holder 390px wide, against a reference that is two-up with the same catalogue. Check
+  the mobile capture before accepting the base tier a desktop-first grid falls back to.
+- **An input with a font under 16px makes iOS Safari zoom the whole page on focus** — the single
+  most jarring mobile-checkout defect, and invisible in any desktop or emulator pass (it needs real
+  Safari). These designs want 12–13px form text, so give every `input`/`select` `text-[16px]` at
+  mobile widths and restore the design size at `lg:`. The taller control that falls out of 16px text
+  is a better touch target anyway.
 - **Font roles resolve per site**, and there are *two* computed-value traps stacked on top of each
   other. `@theme` emits its variables into `:root`, so a role written as
   `--font-heading: var(--site-heading-font, <system stack>)` resolves **at `:root`**, where

@@ -36,7 +36,11 @@ export default function ReviewCarousel() {
         Review {index + 1} of {reviews.length}
       </span>
 
-      <ul className="mt-8 flex items-center justify-center gap-2.5">
+      {/* Dot pagination is the worst case of the tap-target trap in `PLAN.md`:
+          styled as the button, an 8px diamond *is* the control. The visible dot
+          goes inside a 24px flex button instead, which is why the row carries
+          no gap — the buttons' own boxes are the spacing. */}
+      <ul className="mt-8 flex items-center justify-center">
         {reviews.map((item, i) => (
           <li key={item.quote}>
             <button
@@ -44,10 +48,15 @@ export default function ReviewCarousel() {
               onClick={() => setIndex(i)}
               aria-label={`Show review ${i + 1}`}
               aria-current={i === index}
-              className={`block size-2 rotate-45 transition-colors ${
-                i === index ? "bg-elburg-ink" : "bg-elburg-ink/25 hover:bg-elburg-ink/50"
-              }`}
-            />
+              className="flex size-6 items-center justify-center"
+            >
+              <span
+                aria-hidden
+                className={`block size-2 rotate-45 transition-colors ${
+                  i === index ? "bg-elburg-ink" : "bg-elburg-ink/25 hover:bg-elburg-ink/50"
+                }`}
+              />
+            </button>
           </li>
         ))}
       </ul>

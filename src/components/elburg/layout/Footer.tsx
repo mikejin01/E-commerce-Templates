@@ -100,7 +100,9 @@ export default function Footer() {
           <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-[13px] text-elburg-bone/75">
             {legalLinks.map((label, i) => (
               <span key={label} className="flex items-center gap-2">
-                <InertLink className="hover:text-elburg-bone hover:underline">{label}</InertLink>
+                <InertLink className="-my-1 py-1 hover:text-elburg-bone hover:underline">
+                  {label}
+                </InertLink>
                 <span aria-hidden className="text-elburg-bone/40">
                   {i < legalLinks.length - 1 ? "/" : "|"}
                 </span>

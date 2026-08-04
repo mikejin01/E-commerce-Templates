@@ -18,8 +18,7 @@ const TIER_TILES: { tier: CarryTier; image: string; alt: string }[] = [
   },
 ];
 
-const CARD_SIZES =
-  "(min-width: 1280px) 21vw, (min-width: 1024px) 28vw, (min-width: 640px) 44vw, 88vw";
+const CARD_SIZES = "(min-width: 1280px) 21vw, (min-width: 1024px) 28vw, 44vw";
 
 /**
  * The listing, built against the reference's `/wallets/all/` capture: title and
@@ -97,8 +96,11 @@ export default function ListingView() {
         </p>
       </div>
 
-      {/* minmax(0,…) on every track at every breakpoint — standing rule 5 */}
-      <div className="mt-6 grid grid-cols-[minmax(0,1fr)] gap-x-4 gap-y-10 sm:grid-cols-[repeat(2,minmax(0,1fr))] lg:grid-cols-[repeat(3,minmax(0,1fr))] xl:grid-cols-[repeat(4,minmax(0,1fr))]">
+      {/* Two up on a phone, as the reference's own `/wallets/all/` capture is —
+          one full-width card per row turns 24 SKUs into a 14,000px page and
+          renders a $49 card holder at 390px wide.
+          minmax(0,…) on every track at every breakpoint — standing rule 5. */}
+      <div className="mt-6 grid grid-cols-[repeat(2,minmax(0,1fr))] gap-x-4 gap-y-10 lg:grid-cols-[repeat(3,minmax(0,1fr))] xl:grid-cols-[repeat(4,minmax(0,1fr))]">
         {visible.map(({ product, color }, i) => (
           <ProductCard
             key={`${product.slug}-${color.slug}`}

@@ -65,7 +65,7 @@ export default function Hero() {
                 </span>
               ))}
             </p>
-            <InertLink className="mt-8 inline-block font-heading text-[12px] font-medium uppercase leading-none tracking-[0.06em] underline underline-offset-[5px] hover:text-elburg-accent">
+            <InertLink className="mt-6 inline-block py-2 font-heading text-[12px] font-medium uppercase leading-none tracking-[0.06em] underline underline-offset-[5px] hover:text-elburg-accent">
               {tile.link}
             </InertLink>
           </div>

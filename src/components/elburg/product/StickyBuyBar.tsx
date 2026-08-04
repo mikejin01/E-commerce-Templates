@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductThumb from "@/components/elburg/product/ProductThumb";
 import { titleFor, unitPrice, type ColorVariant, type Product } from "@/data/elburg/products";
 import { formatPrice } from "@/lib/elburg/format";
@@ -10,6 +10,13 @@ import { formatPrice } from "@/lib/elburg/format";
  * scrolled away, and it is a *second* add-to-cart control — so standing rule 6
  * applies to it as well, and its button has to sit inside the viewport at every
  * QA width. Hence the `minmax(0,…)` text track and the shrink-0 button.
+ *
+ * Being inside the viewport is not the same as being reachable: the showcase's
+ * floating DemoSwitcher sits at the same corner and covered this button
+ * completely on a phone. So the bar publishes its own height as
+ * `--site-bottom-bar` on the document, which the switcher lifts itself by (see
+ * `DemoSwitcher`) — the shell moves for the site, rather than each site
+ * reserving a lane for the shell.
  */
 export default function StickyBuyBar({
   product,
@@ -22,6 +29,7 @@ export default function StickyBuyBar({
   addOns: string[];
   onAdd: () => void;
 }) {
+  const barRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -33,8 +41,22 @@ export default function StickyBuyBar({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  /* Tell the shell how much of the bottom edge this bar owns. Read from the
+     rendered element rather than hard-coded: the bar is taller from `sm`. */
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty(
+      "--site-bottom-bar",
+      visible ? `${barRef.current?.offsetHeight ?? 0}px` : "0px",
+    );
+    return () => {
+      root.style.removeProperty("--site-bottom-bar");
+    };
+  }, [visible]);
+
   return (
     <div
+      ref={barRef}
       /* z-30 sits under the site header (z-40) and the cart drawer (z-50) */
       className={`fixed inset-x-0 bottom-0 z-30 border-t border-elburg-ink/15 bg-elburg-paper transition-transform duration-300 ${
         visible ? "translate-y-0" : "translate-y-full"

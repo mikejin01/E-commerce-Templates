@@ -56,7 +56,7 @@ export default function CartDrawer() {
             type="button"
             onClick={closeDrawer}
             aria-label="Close bag"
-            className="hover:text-elburg-accent"
+            className="-m-2.5 p-2.5 hover:text-elburg-accent"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-5">
               <path d="m6 6 12 12M18 6 6 18" strokeLinecap="round" />

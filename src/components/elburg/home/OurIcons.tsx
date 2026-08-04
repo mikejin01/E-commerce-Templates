@@ -62,20 +62,26 @@ export default function OurIcons() {
                 <p className="mt-1 text-[14px] italic leading-none opacity-70">{color.name}</p>
               </Link>
 
-              {/* the model's colourways, each a link to that SKU's PDP */}
-              <ul className="mt-3 flex items-center gap-1.5">
+              {/* the model's colourways, each a link to that SKU's PDP. The
+                  dot sits inside a 24px hit box — see the note in ProductCard */}
+              <ul className="mt-3 flex items-center gap-2.5">
                 {product.colors.map((option, j) => (
                   <li key={option.slug}>
                     <Link
                       href={`/elburg/products/${product.slug}?colour=${option.slug}`}
                       aria-label={`${product.name} in ${option.name}`}
-                      style={{ backgroundColor: option.hex }}
-                      className={`block size-3.5 rounded-full ${
-                        j === 0
-                          ? "ring-1 ring-elburg-ink/50 ring-offset-2 ring-offset-elburg-paper"
-                          : ""
-                      }`}
-                    />
+                      className="-m-1.25 flex size-6 items-center justify-center"
+                    >
+                      <span
+                        aria-hidden
+                        style={{ backgroundColor: option.hex }}
+                        className={`block size-3.5 rounded-full ${
+                          j === 0
+                            ? "ring-1 ring-elburg-ink/50 ring-offset-2 ring-offset-elburg-paper"
+                            : ""
+                        }`}
+                      />
+                    </Link>
                   </li>
                 ))}
               </ul>

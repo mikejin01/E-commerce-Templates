@@ -94,13 +94,15 @@ export default function ImageStrip({ color }: { color: ColorVariant }) {
       </span>
 
       {count > 1 && (
-        <div className="mt-3 flex items-center gap-2 px-1">
+        /* 44px controls on a phone — these are the only way to reach the open
+           and side views without a swipe; the design's 32px returns at `lg` */
+        <div className="mt-3 flex items-center gap-2 px-6 lg:px-1">
           <button
             type="button"
             onClick={() => goTo(Math.max(0, index - 1))}
             disabled={index === 0}
             aria-label="Previous image"
-            className="flex size-8 items-center justify-center border border-elburg-ink/25 transition-colors hover:bg-elburg-ink/5 disabled:opacity-30"
+            className="flex size-11 items-center justify-center border border-elburg-ink/25 transition-colors hover:bg-elburg-ink/5 disabled:opacity-30 lg:size-8"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="size-4">
               <path d="m14 5-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
@@ -111,7 +113,7 @@ export default function ImageStrip({ color }: { color: ColorVariant }) {
             onClick={() => goTo(Math.min(count - 1, index + 1))}
             disabled={index === count - 1}
             aria-label="Next image"
-            className="flex size-8 items-center justify-center border border-elburg-ink/25 transition-colors hover:bg-elburg-ink/5 disabled:opacity-30"
+            className="flex size-11 items-center justify-center border border-elburg-ink/25 transition-colors hover:bg-elburg-ink/5 disabled:opacity-30 lg:size-8"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="size-4">
               <path d="m10 5 7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />

@@ -48,19 +48,29 @@ export default function ProductCard({
         <p className="mt-1 text-[14px] italic leading-none opacity-70">{color.name}</p>
       </Link>
 
-      <ul className="mt-3 flex items-center gap-1.5">
+      {/* A 14px dot *is* the control unless it is given a hit area, which is
+          the worst case of the tap-target trap in `PLAN.md`. The link is a
+          24px box with the dot drawn inside it; `-m-1.25` (5px) against `gap-2.5`
+          keeps the dots' spacing while leaving the hit areas exactly adjacent
+          rather than overlapping onto the neighbouring colourway. */}
+      <ul className="mt-3 flex items-center gap-2.5">
         {product.colors.map((option) => (
           <li key={option.slug}>
             <Link
               href={`/elburg/products/${product.slug}?colour=${option.slug}`}
               aria-label={`${product.name} in ${option.name}`}
-              style={{ backgroundColor: option.hex }}
-              className={`block size-3.5 rounded-full ${
-                option.slug === color.slug
-                  ? "ring-1 ring-elburg-ink/50 ring-offset-2 ring-offset-elburg-paper"
-                  : ""
-              }`}
-            />
+              className="-m-1.25 flex size-6 items-center justify-center"
+            >
+              <span
+                aria-hidden
+                style={{ backgroundColor: option.hex }}
+                className={`block size-3.5 rounded-full ${
+                  option.slug === color.slug
+                    ? "ring-1 ring-elburg-ink/50 ring-offset-2 ring-offset-elburg-paper"
+                    : ""
+                }`}
+              />
+            </Link>
           </li>
         ))}
       </ul>

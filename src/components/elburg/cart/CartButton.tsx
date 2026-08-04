@@ -21,11 +21,13 @@ export default function CartButton() {
       type="button"
       onClick={openDrawer}
       aria-label={showBadge ? `Bag, ${count} item${count === 1 ? "" : "s"}` : "Bag"}
-      className="relative hover:text-elburg-accent"
+      /* -m-2.5 p-2.5 pads the 20px icon out to a finger-sized target without
+         moving the header's layout — see the tap-target trap in `PLAN.md` */
+      className="relative -m-2.5 p-2.5 hover:text-elburg-accent"
     >
       <BagIcon />
       {showBadge && (
-        <span className="absolute -right-2 -top-1 flex min-w-4 items-center justify-center rounded-full bg-elburg-accent px-1 font-heading text-[10px] font-semibold leading-4 text-elburg-paper">
+        <span className="absolute right-0.5 top-1.5 flex min-w-4 items-center justify-center rounded-full bg-elburg-accent px-1 font-heading text-[10px] font-semibold leading-4 text-elburg-paper">
           {count}
         </span>
       )}

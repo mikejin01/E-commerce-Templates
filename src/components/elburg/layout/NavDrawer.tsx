@@ -50,7 +50,10 @@ function UsFlag() {
  *  a real `Link`; everything else stays an `InertLink` (standing rule 3). Phase
  *  3 turned the eight model entries and "See all wallets" into the former. */
 function LinkGroup({ group, onNavigate }: { group: NavGroup; onNavigate: () => void }) {
-  const itemClass = `block font-heading font-medium uppercase leading-none tracking-[0.02em] hover:text-elburg-accent ${
+  /* `-my-1.5 py-1.5` pads each entry to ~27px without changing the list's
+     rhythm: the negative margin cancels the padding, so the hit areas grow into
+     the `space-y-3` gaps and meet rather than overlap. */
+  const itemClass = `-my-1.5 block py-1.5 font-heading font-medium uppercase leading-none tracking-[0.02em] hover:text-elburg-accent ${
     group.small ? "text-[12px]" : "text-[15px]"
   }`;
   return (
@@ -91,7 +94,7 @@ function Stories({ menu }: { menu: NavMenu }) {
     <div className="mt-2">
       <div className="mb-4 flex items-baseline justify-between gap-4">
         <p className="text-[13px] text-elburg-ink/55">{menu.stories.heading}</p>
-        <InertLink className="shrink-0 text-[13px] underline underline-offset-4 hover:text-elburg-accent">
+        <InertLink className="-my-1.5 shrink-0 py-1.5 text-[13px] underline underline-offset-4 hover:text-elburg-accent">
           See all
         </InertLink>
       </div>
@@ -194,7 +197,13 @@ export default function NavDrawer({
         {/* ——— desktop: column one ——— */}
         <div className="hidden w-[320px] shrink-0 flex-col lg:flex">
           <div className="flex h-[50px] shrink-0 items-center gap-6 px-6">
-            <button type="button" aria-label="Close menu" onClick={onClose} className="-ml-1">
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={onClose}
+              /* padded hit area, negative margin so the icon stays put */
+              className="-m-2.5 -ml-3.5 p-2.5"
+            >
               <CloseIcon />
             </button>
             {mainNav.map((item, i) => (
@@ -268,7 +277,7 @@ export default function NavDrawer({
               <button
                 type="button"
                 onClick={() => setMobileSection(null)}
-                className="flex items-center gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.04em]"
+                className="-m-2.5 flex items-center gap-2 p-2.5 font-heading text-[13px] font-semibold uppercase tracking-[0.04em]"
               >
                 <ChevronRight className="size-4 rotate-180" />
                 Back
@@ -276,7 +285,7 @@ export default function NavDrawer({
             ) : (
               <BrandMark className="size-7" />
             )}
-            <button type="button" aria-label="Close menu" onClick={onClose}>
+            <button type="button" aria-label="Close menu" onClick={onClose} className="-m-2.5 p-2.5">
               <CloseIcon />
             </button>
           </div>
@@ -295,7 +304,9 @@ export default function NavDrawer({
                       <button
                         type="button"
                         onClick={() => setMobileSection(i)}
-                        className="flex w-full items-center justify-between gap-4 py-2.5 text-left font-heading text-[16px] font-semibold uppercase leading-none tracking-[0.02em]"
+                        /* py-3.5 makes each section row a 44px tap target —
+                           these are the drawer's whole job on a phone */
+                        className="flex w-full items-center justify-between gap-4 py-3.5 text-left font-heading text-[16px] font-semibold uppercase leading-none tracking-[0.02em]"
                       >
                         {section.label}
                         <ChevronRight className="size-5 shrink-0" />
@@ -306,7 +317,7 @@ export default function NavDrawer({
                 <ul className="mt-10 space-y-3.5">
                   {utilityNav.map((item) => (
                     <li key={item.label}>
-                      <InertLink className="font-heading text-[12px] font-medium uppercase leading-none tracking-[0.04em]">
+                      <InertLink className="-my-1.5 block w-full py-1.5 font-heading text-[12px] font-medium uppercase leading-none tracking-[0.04em]">
                         {item.label}
                       </InertLink>
                     </li>
@@ -320,7 +331,7 @@ export default function NavDrawer({
             <button
               type="button"
               title="Not part of this demo"
-              className="flex cursor-default items-center gap-2 text-[13px]"
+              className="-m-2 flex cursor-default items-center gap-2 p-2 text-[13px]"
             >
               <UsFlag />
               <span>USA</span>

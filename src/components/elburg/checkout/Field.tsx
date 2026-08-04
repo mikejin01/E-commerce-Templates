@@ -6,10 +6,15 @@ import type { InputHTMLAttributes, SelectHTMLAttributes } from "react";
  * The checkout's form controls, in ELBURG's voice: condensed caps labels,
  * hairline ink borders that go solid on focus, and italic serif for anything
  * secondary — the same pair the buy box and the cart already use.
+ *
+ * 16px text below `lg`, the design's 15px above it: iOS Safari zooms the whole
+ * page in when a focused control's font is under 16px, which is the single most
+ * jarring mobile-checkout defect and invisible in any emulator (the input-zoom
+ * trap in `PLAN.md`). The taller control is a better touch target anyway.
  */
 
 const CONTROL =
-  "w-full border bg-white px-3.5 py-3 text-[15px] transition-colors placeholder:italic placeholder:text-elburg-ink/35 focus:outline-none";
+  "w-full border bg-white px-3.5 py-3 text-[16px] transition-colors placeholder:italic placeholder:text-elburg-ink/35 focus:outline-none lg:text-[15px]";
 
 function borderClass(error?: string) {
   return error
@@ -153,7 +158,8 @@ export function StaticField({
       <p className="mb-1.5 font-heading text-[12px] font-medium uppercase tracking-[0.12em] text-elburg-ink/60">
         {label}
       </p>
-      <p className="border border-dashed border-elburg-ink/20 bg-elburg-ink/[0.03] px-3.5 py-3 text-[15px]">
+      {/* matches CONTROL's box so the read-only row lines up with the fields */}
+      <p className="border border-dashed border-elburg-ink/20 bg-elburg-ink/[0.03] px-3.5 py-3 text-[16px] lg:text-[15px]">
         {value}
       </p>
       {note && <p className="mt-1.5 text-[13px] italic text-elburg-ink/55">{note}</p>}

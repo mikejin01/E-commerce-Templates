@@ -234,7 +234,7 @@ export default function CheckoutForm() {
           </h1>
           <Link
             href="/elburg/cart"
-            className="font-heading text-[12px] uppercase tracking-[0.1em] underline underline-offset-4 opacity-70 hover:text-elburg-accent hover:opacity-100"
+            className="-my-2 py-2 font-heading text-[12px] uppercase tracking-[0.1em] underline underline-offset-4 opacity-70 hover:text-elburg-accent hover:opacity-100"
           >
             Return to bag
           </Link>

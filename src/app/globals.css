@@ -94,6 +94,18 @@ h4 {
   }
 }
 
+/*
+ * A site with a sticky bottom bar publishes its height as `--site-bottom-bar`
+ * on the document (ELBURG's PDP buy bar does). It is 0 everywhere else, so this
+ * costs nothing — but where it is set, the bar owns the bottom edge of the
+ * viewport and the page's own last rows end up underneath it with no scroll
+ * left to reveal them. The footer clears itself by that much; the showcase's
+ * floating DemoSwitcher lifts by the same amount in its own component.
+ */
+footer {
+  padding-bottom: var(--site-bottom-bar, 0px);
+}
+
 /* Hide scrollbars on carousels while keeping them scrollable */
 .no-scrollbar {
   -ms-overflow-style: none;

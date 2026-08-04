@@ -449,6 +449,11 @@ retired `my.secrid.com` without inventing a domain to replace it.
       every band, header, footer, both drawers, all three empty states and the site 404, at desktop
       and mobile. Five visual findings fixed (below). Build, lint, scrub grep and both shape greps
       clean.
+- [x] **Session 7 — Mobile pass.** 360/390/414/430/768 across all six routes. Fixed: the
+      DemoSwitcher covering the PDP's sticky ADD TO BAG and the footer's last row (`--site-bottom-bar`),
+      13 checkout controls under 16px (iOS focus-zoom), the listing's one-up mobile grid (the
+      reference is two-up), and every interactive control under the 24px touch floor. Zero overflow,
+      zero sub-24px controls, build clean.
 
 ---
 
@@ -732,3 +737,48 @@ for `®`/`™` suffixes and interior-capital words.
   their box, rather than taking the first three. And a lesson about reading screenshots: the
   flagship band looked, at screenshot scale, like it had lost its dark ground. It had not —
   `rgb(69,69,69)`, exactly as written. Sample pixels before believing a colour.
+
+- 2026-08-04 (Session 7): **Mobile pass.** Measured at 360/390/414/430/768 across all six routes,
+  against the reference's own mobile captures. Horizontal overflow was already clean at every width
+  and stayed clean — the responsive skeleton was sound. What the pass found was in the two places a
+  desktop-first QA never looks: what a *finger* can reach, and what a *fixed* element sits on top of.
+
+  **Two defects that broke the page rather than dressing it.**
+
+  - **The DemoSwitcher covered the PDP's ADD TO BAG completely.** The sticky buy bar and the
+    showcase's floating pill are both `z-30` at the bottom-right corner, and the pill paints last:
+    `elementFromPoint` at the CTA's centre returned the switcher, so the site's second add-to-cart
+    control was unclickable on every phone width. Standing rule 6's rect assertion passed the whole
+    time — "inside the viewport" is not "reachable". `PLAN.md` QA item 2 now demands a hit test, and
+    the same collision hid the footer's copyright line behind the bar with no scroll left. Both are
+    fixed through one mechanism: `StickyBuyBar` publishes its measured height as `--site-bottom-bar`
+    on the document, `globals.css` gives `footer` that much `padding-bottom`, and `DemoSwitcher`
+    offsets its `bottom` by it. Any future site's bottom bar inherits both behaviours by setting the
+    same variable.
+  - **Every checkout control was 15px, so iOS Safari zooms the page on focus** — thirteen of them.
+    This site was built after VERDON's Session 9 wrote that rule into `PLAN.md` and still shipped it,
+    which is the argument for asserting `getComputedStyle(input).fontSize >= 16` rather than trusting
+    the rule. `Field`'s `CONTROL` and the footer newsletter are now `text-[16px] lg:text-[15px]`.
+
+  **The listing was one card per row at 390** — a 13,900px page rendering a $49 card holder 390px
+  wide, while `plp-all-wallets-mobile.png` shows the reference two-up with the same catalogue. The
+  base tier was simply the fallback a desktop-first grid left behind (`grid-cols-1 sm:grid-cols-2`).
+  Two-up from the base cuts the page to 5,500px and matches the capture; `CARD_SIZES` lost its
+  now-unreachable `88vw` tier.
+
+  **Tap targets, the standing-rule-that-was-not-applied.** ELBURG never got VERDON's Session 9
+  treatment: the audit found the header's search and bag icons at 20×20, both drawer close buttons
+  unpadded, `Remove` at 36×17, every footer link at 14px of line box, the review dots at 8px and —
+  worst — the colourway dots at 14×14, three to a card across 24 cards. All are now at or above the
+  24px floor with the visual design unchanged, the wordmark link fills the header row, and the PDP's
+  gallery arrows go 44px below `lg`. The arithmetic that makes this non-destructive is worth keeping:
+  for a `d`-px dot in an `H`-px hit box with margin `m` and list gap `g`, the visual gap is
+  `g + H − 2m − d` and the *hit* gap is `g − 2m` — so pick `m` and `g` to hold the first constant and
+  keep the second at zero, or adjacent swatches steal each other's taps. For the 14px dots that is
+  `H=24, m=5, g=10`; for the buy box's 24px swatches, `H=34, m=5, g=10`.
+
+  Verified on the production static export: zero overflow and zero sub-24px controls at
+  360/390/414/430/768 across all six routes (the remaining reports are native checkbox/radio boxes,
+  each inside or bound to a full-row `<label>` that is the real target), the CTA hit test returns the
+  button, and the whole flow re-runs to a confirmation. Build clean. `pnpm lint` still fails only on
+  the pre-existing `ProductDetail.tsx:40` `set-state-in-effect`, untouched here.

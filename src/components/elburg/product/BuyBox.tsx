@@ -61,7 +61,7 @@ export default function BuyBox({
   return (
     <div className="min-w-0">
       <nav aria-label="Breadcrumb" className="text-[14px] italic opacity-75">
-        <Link href="/elburg/collections/all" className="hover:text-elburg-accent">
+        <Link href="/elburg/collections/all" className="-my-1.5 py-1.5 hover:text-elburg-accent">
           Wallets
         </Link>
         <span aria-hidden className="px-1.5">
@@ -86,6 +86,11 @@ export default function BuyBox({
 
       <div className="mt-6">
         <p className="text-[14px] italic opacity-80">{color.name}</p>
+        {/* The swatch is the PDP's most-tapped control, and at 24px it only
+            just clears WCAG 2.5.8's floor. The button is a 34px box with the
+            24px swatch drawn inside; `-m-1.25` (5px) against `gap-2.5` leaves
+            the swatches exactly where they were and the hit areas adjacent
+            rather than overlapping (the tap-target trap in `PLAN.md`). */}
         <ul className="mt-2 flex flex-wrap items-center gap-2.5">
           {product.colors.map((option) => (
             <li key={option.slug}>
@@ -95,13 +100,18 @@ export default function BuyBox({
                 aria-pressed={option.slug === color.slug}
                 aria-label={option.name}
                 title={option.name}
-                style={{ backgroundColor: option.hex }}
-                className={`block size-6 rounded-full transition-shadow ${
-                  option.slug === color.slug
-                    ? "ring-1 ring-elburg-ink/60 ring-offset-2 ring-offset-elburg-paper"
-                    : "hover:ring-1 hover:ring-elburg-ink/30 hover:ring-offset-2 hover:ring-offset-elburg-paper"
-                }`}
-              />
+                className="group -m-1.25 flex size-8.5 items-center justify-center"
+              >
+                <span
+                  aria-hidden
+                  style={{ backgroundColor: option.hex }}
+                  className={`block size-6 rounded-full transition-shadow ${
+                    option.slug === color.slug
+                      ? "ring-1 ring-elburg-ink/60 ring-offset-2 ring-offset-elburg-paper"
+                      : "group-hover:ring-1 group-hover:ring-elburg-ink/30 group-hover:ring-offset-2 group-hover:ring-offset-elburg-paper"
+                  }`}
+                />
+              </button>
             </li>
           ))}
         </ul>

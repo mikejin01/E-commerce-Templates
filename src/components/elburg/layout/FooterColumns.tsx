@@ -52,7 +52,10 @@ export default function FooterColumns() {
                 <ul key={blockIndex} className="space-y-3 [&:not(:first-child)]:mt-5">
                   {block.map((label) => (
                     <li key={label}>
-                      <InertLink className="text-[14px] leading-none text-elburg-bone/85 hover:text-elburg-bone hover:underline">
+                      {/* `-my-1.5 py-1.5` grows a 14px link to a 26px tap
+                          target inside the list's own `space-y-3` gaps, with
+                          no layout shift — the tap-target trap in `PLAN.md` */}
+                      <InertLink className="-my-1.5 block py-1.5 text-[14px] leading-none text-elburg-bone/85 hover:text-elburg-bone hover:underline">
                         {label}
                       </InertLink>
                     </li>

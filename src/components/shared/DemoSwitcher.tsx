@@ -12,6 +12,11 @@ import { demoSites } from "@/data/sites";
  * Rendered outside every `.site-*` wrapper, so it keeps the neutral system
  * font. Sits at z-30 — above page content, below each site's own overlays
  * (mobile nav at z-40/50, cart drawer at z-50), so it never blocks a drawer.
+ *
+ * z-order is not enough at the bottom edge: a site with its own sticky bottom
+ * bar (ELBURG's PDP buy bar) put its primary CTA in exactly this corner, and on
+ * a phone this pill covered it outright. Any such bar publishes its height as
+ * `--site-bottom-bar` on the document, and the pill lifts itself clear.
  */
 export default function DemoSwitcher() {
   const [open, setOpen] = useState(false);
@@ -22,7 +27,10 @@ export default function DemoSwitcher() {
   );
 
   return (
-    <div className="fixed bottom-4 right-4 z-30 flex flex-col items-end gap-2">
+    <div
+      className="fixed right-4 z-30 flex flex-col items-end gap-2 transition-[bottom] duration-300"
+      style={{ bottom: "calc(1rem + var(--site-bottom-bar, 0px))" }}
+    >
       {open && (
         <nav
           aria-label="Demo sites"

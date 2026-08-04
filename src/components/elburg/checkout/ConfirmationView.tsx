@@ -174,7 +174,7 @@ export default function ConfirmationView() {
           Register your wallet once it arrives for an extended warranty and a certificate of
           authenticity.
         </p>
-        <InertLink className="font-heading text-[12px] uppercase tracking-[0.1em] underline underline-offset-4 hover:text-elburg-accent">
+        <InertLink className="-my-2 py-2 font-heading text-[12px] uppercase tracking-[0.1em] underline underline-offset-4 hover:text-elburg-accent">
           Register your wallet
         </InertLink>
       </div>

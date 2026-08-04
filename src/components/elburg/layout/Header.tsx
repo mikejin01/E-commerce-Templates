@@ -71,7 +71,11 @@ export default function Header() {
               aria-label="Open menu"
               aria-expanded={open}
               onClick={() => openMenu(0)}
-              className="lg:hidden"
+              /* the icon is 24px; -m-2.5 p-2.5 gives it a finger-sized hit area
+                 without moving the header's layout (the tap-target trap in
+                 `PLAN.md`). Padding stays at half the row's gap so adjacent
+                 hit areas meet rather than overlap. */
+              className="-m-2.5 p-2.5 lg:hidden"
             >
               <BurgerIcon />
             </button>
@@ -93,7 +97,9 @@ export default function Header() {
           <Link
             href="/elburg"
             aria-label="ELBURG home"
-            className="flex items-center justify-center hover:text-elburg-accent"
+            /* h-full so the wordmark's tap area is the header row, not the
+               21px cap height of the type */
+            className="flex h-full items-center justify-center hover:text-elburg-accent"
           >
             {scrolled ? (
               <BrandMark className="size-7" />
@@ -129,7 +135,7 @@ export default function Header() {
               type="button"
               aria-label="Search"
               title="Not part of this demo"
-              className="cursor-default hover:text-elburg-accent"
+              className="-m-2.5 cursor-default p-2.5 hover:text-elburg-accent"
             >
               <SearchIcon />
             </button>
