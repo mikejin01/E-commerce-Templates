@@ -8,20 +8,20 @@ import { getColor, getProduct, products, titleFor } from "@/data/elburg/products
 
 type PageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ colour?: string }>;
 };
 
 export function generateStaticParams() {
   return products.map((product) => ({ slug: product.slug }));
 }
 
-export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+// Static export: metadata can't vary by `?colour=`, so it uses the default
+// colourway; ProductDetail picks the query up client-side.
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const { colour } = await searchParams;
   const product = getProduct(slug);
   if (!product) return { title: "Not found" };
 
-  const color = getColor(product, colour);
+  const color = getColor(product, undefined);
   return {
     title: `${titleFor(product, color)} — ${color.name}`,
     description: product.description,
@@ -33,14 +33,13 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   };
 }
 
-export default async function ElburgProductPage({ params, searchParams }: PageProps) {
+export default async function ElburgProductPage({ params }: PageProps) {
   const { slug } = await params;
-  const { colour } = await searchParams;
   const product = getProduct(slug);
   if (!product) notFound();
 
   return (
-    <ProductDetail product={product} initialColour={colour}>
+    <ProductDetail product={product}>
       <ReviewCarousel />
       <WalletFacts />
       <StoriesBand />

@@ -61,6 +61,15 @@ add-ons) is brand-specific, so a shared abstraction would be the wrong altitude.
 standing rule or a layout trap in this file. Site-specific detail stays in `sites/<slug>.md`. This
 file only grows rules, never state.
 
+**9. The build is a static export (GitHub Pages).** `output: "export"` with a base path from
+`NEXT_PUBLIC_BASE_PATH`, deployed by `.github/workflows/deploy.yml`. Consequences for every site:
+no server-side `searchParams` (ELBURG's `?colour=` broke the export — read the query client-side
+after mount instead), no route handlers, no middleware. `next/image` srcs get the base path from
+`src/lib/image-loader.ts` automatically, but any *hand-written* URL that bypasses the router or
+loader (raw `<img>`, CSS `url()`, OG image paths) will silently 404 on Pages — OG paths resolve via
+`metadataBase`/`NEXT_PUBLIC_SITE_URL`. Local `pnpm dev`/`pnpm build` are unaffected (no env var set
+→ empty base path).
+
 **9. Every downloaded image is inspected before it ships.** The scrub grep is blind to pixels, and
 reference photography leaks in three ways the naming map cannot reach:
 

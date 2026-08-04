@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import BuyBox from "@/components/elburg/product/BuyBox";
 import ImageStrip from "@/components/elburg/product/ImageStrip";
@@ -16,24 +16,29 @@ import { useCart } from "@/lib/elburg/cart-context";
  * URL; this demo has one route per model (standing rule 3) and carries the
  * colourway in `?colour=`, which the listing links to and this component keeps
  * in sync with `replace` — so a swatch click is shareable and does not stack up
- * history entries.
+ * history entries. The query is read after mount (not from the server): the
+ * build is a static export, so the prerendered HTML always shows the default
+ * colourway.
  *
  * The three sections that do not depend on the colourway — reviews, wallet
  * facts, stories — arrive as `children` and stay server components.
  */
 export default function ProductDetail({
   product,
-  initialColour,
   children,
 }: {
   product: Product;
-  initialColour?: string;
   children: React.ReactNode;
 }) {
   const router = useRouter();
   const { addItem } = useCart();
-  const [colourSlug, setColourSlug] = useState(() => getColor(product, initialColour).slug);
+  const [colourSlug, setColourSlug] = useState(() => getColor(product, undefined).slug);
   const [addOns, setAddOns] = useState<string[]>([]);
+
+  useEffect(() => {
+    const colour = new URLSearchParams(window.location.search).get("colour");
+    if (colour) setColourSlug(getColor(product, colour).slug);
+  }, [product]);
 
   const color = getColor(product, colourSlug);
 

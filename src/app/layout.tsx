@@ -3,8 +3,9 @@ import "./globals.css";
 import DemoSwitcher from "@/components/shared/DemoSwitcher";
 
 export const metadata: Metadata = {
-  // local-only demo; keeps OG asset paths absolute without a warning at build
-  metadataBase: new URL("http://localhost:3000"),
+  // deploy URL (incl. base path) so OG asset paths resolve; localhost keeps
+  // local builds warning-free
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
     default: "Commerce Demo Showcase",
     template: "%s | Commerce Demo Showcase",
