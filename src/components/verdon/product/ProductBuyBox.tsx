@@ -156,10 +156,10 @@ export default function ProductBuyBox({
       )}
 
       <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] text-neutral-500">
-        <button type="button" className="underline underline-offset-4 hover:text-verdon-green">
+        <button type="button" className="-my-2 py-2 underline underline-offset-4 hover:text-verdon-green">
           Prescription Lenses
         </button>
-        <button type="button" className="underline underline-offset-4 hover:text-verdon-green">
+        <button type="button" className="-my-2 py-2 underline underline-offset-4 hover:text-verdon-green">
           Size Guide
         </button>
       </div>

@@ -70,7 +70,7 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <InertLink className="text-[12px] text-white/85 hover:text-white hover:underline">
+                    <InertLink className="-my-1 py-1 text-[12px] text-white/85 hover:text-white hover:underline">
                       {link.label}
                     </InertLink>
                   </li>
@@ -93,7 +93,7 @@ export default function Footer() {
                 <InertLink
                   key={icon.label}
                   label={icon.label}
-                  className="text-white/85 hover:text-white"
+                  className="-m-2 p-2 text-white/85 hover:text-white"
                 >
                   <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
                     <path d={icon.path} />

@@ -33,7 +33,9 @@ export default function AsSeenIn() {
         </ul>
 
         {pages > 1 && (
-          <div className="mt-10 flex items-center justify-center gap-2.5">
+          <div className="mt-10 flex items-center justify-center gap-1">
+            {/* the visible dot sits inside a larger button, so the tap target
+                is finger-sized without the dots reading any bigger */}
             {Array.from({ length: pages }, (_, i) => (
               <button
                 key={i}
@@ -41,10 +43,14 @@ export default function AsSeenIn() {
                 onClick={() => setPage(i)}
                 aria-label={`Show press page ${i + 1}`}
                 aria-current={i === page}
-                className={`size-2.5 rounded-full transition-colors ${
-                  i === page ? "bg-white" : "bg-white/35 hover:bg-white/60"
-                }`}
-              />
+                className="flex size-6 items-center justify-center"
+              >
+                <span
+                  className={`size-2.5 rounded-full transition-colors ${
+                    i === page ? "bg-white" : "bg-white/35 hover:bg-white/60"
+                  }`}
+                />
+              </button>
             ))}
           </div>
         )}

@@ -47,7 +47,7 @@ export default function Header() {
         <Link
           href="/verdon"
           aria-label="VERDON home"
-          className="shrink-0 font-heading text-[19px] font-semibold uppercase leading-none tracking-[0.2em] hover:opacity-75"
+          className="-my-3 shrink-0 py-3 font-heading text-[19px] font-semibold uppercase leading-none tracking-[0.2em] hover:opacity-75"
         >
           {/* -mr compensates for the trailing letter-space, so the mark optically centres */}
           <span className="-mr-[0.2em] block">Verdon</span>
@@ -68,7 +68,8 @@ export default function Header() {
               <path d="m1.5 2 4.5 4 4.5-4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-          <button aria-label="Search" title="Not part of this demo" className="hover:opacity-75">
+          {/* -m + p trades no layout for a finger-sized hit area on the icon */}
+          <button aria-label="Search" title="Not part of this demo" className="-m-2.5 p-2.5 hover:opacity-75">
             <SearchIcon />
           </button>
           <CartButton />

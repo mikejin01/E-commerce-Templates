@@ -73,7 +73,7 @@ export default function CartLineItem({
           <button
             type="button"
             onClick={() => removeItem(item.key)}
-            className="text-[11px] uppercase tracking-[0.1em] text-neutral-500 underline underline-offset-4 hover:text-verdon-green"
+            className="-m-2 p-2 text-[11px] uppercase tracking-[0.1em] text-neutral-500 underline underline-offset-4 hover:text-verdon-green"
           >
             Remove
           </button>

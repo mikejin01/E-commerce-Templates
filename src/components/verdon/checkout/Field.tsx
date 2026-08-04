@@ -2,8 +2,10 @@
 
 import type { InputHTMLAttributes, SelectHTMLAttributes } from "react";
 
+// 16px on touch widths: iOS Safari zooms the page when a focused input's font
+// is smaller, which is far more disruptive than the size difference
 const CONTROL =
-  "w-full border bg-white px-3.5 py-3 text-[13px] transition-colors placeholder:text-neutral-400 focus:outline-none";
+  "w-full border bg-white px-3.5 py-3 text-[16px] transition-colors placeholder:text-neutral-400 focus:outline-none lg:text-[13px]";
 
 function borderClass(error?: string) {
   return error ? "border-red-500 focus:border-red-500" : "border-neutral-300 focus:border-verdon-green";

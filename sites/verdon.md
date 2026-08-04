@@ -2,7 +2,8 @@
 
 Demo storefront at `/verdon`, built against **vallon.com** as the structural reference. The brand
 in all shipped code and copy is **VERDON** (see the naming map below); Session 7 scrubbed every
-identifying string. Status: complete, Sessions 1–8. Process rules live in `PLAN.md`.
+identifying string. Status: complete, Sessions 1–9, with **one open item — the imagery carries the
+reference's wordmark** (see Session 9's note). Process rules live in `PLAN.md`.
 
 Site folders: `src/app/verdon/`, `src/components/verdon/`, `src/data/verdon/`, `src/lib/verdon/`,
 `public/images/verdon/`. Fonts: Jost (headings; stand-in for the brand's futura-pt) + Montserrat
@@ -141,6 +142,28 @@ Session 7). Then a shape-grep for new marks: `®`/`™` suffixes and interior-ca
 
 ## Session notes
 
+- 2026-08-04 (Session 9): Mobile responsiveness pass over the whole site. The layout itself came
+  through clean — a 39-assertion harness at 360/390/430/768 found **zero horizontal overflow on any
+  route** (including with a filled cart, both drawers open and the checkout summary expanded), ADD
+  TO CART inside the viewport everywhere, no HTTP or console errors; a band-by-band screenshot pass
+  at 390px matched. What the pass did find was *interaction*-level, not layout-level, and both
+  fixes are now layout traps in `PLAN.md`: **(a)** the most-used touch targets were far under
+  finger size — header menu/search/cart and both drawer close buttons were 20–24px, the As-seen-in
+  pagination dots 10px, and the Remove / Size-Guide / footer text links ~14–20px tall. All were
+  padded with `p-* -m-*` (no visual change); the dots moved inside `size-6` buttons; the cart
+  badge had to re-anchor to an inner span so the button's new padding did not displace it.
+  **(b)** the checkout and newsletter inputs at 12–13px trigger iOS Safari's page-zoom on focus —
+  now `text-[16px] lg:text-[13px]` (`Field.tsx` CONTROL) and `lg:text-[12px]` (newsletter). Build
+  green, harness re-run green; the only remaining sub-24px controls are the breadcrumbs and the
+  16px checkboxes, which sit inside full-width clickable labels. `pnpm lint` currently fails on
+  **ELBURG's** `ProductDetail.tsx:40` (`react-hooks/set-state-in-effect`, pre-existing) — not
+  touched here. **Open item found in the screenshots, out of scope for this pass: the reference's
+  wordmark ships in the lifestyle photography.** Plainly legible at 390px render size:
+  `categories/cycling.jpg` (printed on the sunglasses), `categories/accessories.jpg` (knit into
+  the headband), `accessories/leather-pouch-1.jpg` (embossed in the leather); the hero and several
+  Instagram tiles look suspect at 1:1. VERDON shipped before standing rule 9 existed — the site
+  needs the ELBURG-style de-branding sweep (`sites/reference/elburg/pipeline/`), zooming every
+  shipped image 4–5× over product, props and clothing.
 - 2026-07-31 (Session 8): Converted the repo to a multi-site showcase; Verdon is the first entry.
   The mechanical half was one ordered `perl` pass (imports → routes → image paths → tokens) after
   `mv`-ing the folder sets — the repo still has no commits, so plain `mv`. Route links got the

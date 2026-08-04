@@ -30,7 +30,8 @@ export default function NewsletterForm() {
         required
         placeholder="Enter email address"
         aria-label="Email address"
-        className="w-full border border-white/40 bg-transparent px-3 py-2 text-[12px] placeholder:text-white/50 focus:border-white focus:outline-none"
+        /* 16px below lg: a smaller font makes iOS Safari zoom the page on focus */
+        className="w-full border border-white/40 bg-transparent px-3 py-2 text-[16px] placeholder:text-white/50 focus:border-white focus:outline-none lg:text-[12px]"
       />
       <button
         type="submit"

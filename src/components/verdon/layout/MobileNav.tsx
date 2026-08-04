@@ -31,7 +31,7 @@ export default function MobileNav() {
         aria-label="Open menu"
         aria-expanded={open}
         onClick={() => setOpen(true)}
-        className="lg:hidden"
+        className="-m-2.5 p-2.5 lg:hidden"
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-6">
           <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
@@ -61,7 +61,12 @@ export default function MobileNav() {
           <span className="font-heading text-[12px] font-semibold uppercase tracking-[0.16em]">
             Menu
           </span>
-          <button type="button" aria-label="Close menu" onClick={() => setOpen(false)}>
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+            className="-m-2.5 p-2.5"
+          >
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -97,7 +102,7 @@ export default function MobileNav() {
           <ul className="mt-8 space-y-3">
             {footerColumns[1].links.slice(0, 4).map((link) => (
               <li key={link.label}>
-                <InertLink className="text-[13px] text-white/75 hover:text-white">
+                <InertLink className="-my-1.5 py-1.5 text-[13px] text-white/75 hover:text-white">
                   {link.label}
                 </InertLink>
               </li>

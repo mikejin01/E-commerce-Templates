@@ -21,14 +21,17 @@ export default function CartButton() {
       type="button"
       onClick={openDrawer}
       aria-label={showBadge ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart"}
-      className="relative hover:opacity-75"
+      className="-m-2.5 p-2.5 hover:opacity-75"
     >
-      <CartIcon />
-      {showBadge && (
-        <span className="absolute -right-1.5 -top-1 flex min-w-4 items-center justify-center rounded-full bg-white px-1 text-[10px] font-semibold leading-4 text-verdon-green">
-          {count}
-        </span>
-      )}
+      {/* the badge anchors to this span, not the padded button box */}
+      <span className="relative block">
+        <CartIcon />
+        {showBadge && (
+          <span className="absolute -right-1.5 -top-1 flex min-w-4 items-center justify-center rounded-full bg-white px-1 text-[10px] font-semibold leading-4 text-verdon-green">
+            {count}
+          </span>
+        )}
+      </span>
     </button>
   );
 }
